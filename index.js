@@ -1,3 +1,4 @@
 import VGSCardIOModule from './VGSCardIOModule'
+import CardIOUtilities from './CardIOUtilities'
 
-export { VGSCardIOModule }
+export { VGSCardIOModule, CardIOUtilities }

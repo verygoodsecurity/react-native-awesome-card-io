@@ -4,7 +4,7 @@ A complete and **cross-platform** [card.io](https://www.card.io/) component for 
 ## Getting started
 
 ```bash
-$ npm install react-native-awesome-card-io --save
+$ npm install https://github.com/verygoodsecurity/react-native-awesome-card-io --save
 $ react-native link react-native-awesome-card-io
 ```
 
@@ -16,71 +16,16 @@ This component provides an abstraction of the card.io entry points for iOS and A
 
 | Javascript     | iOS                                                                                             | Android                                                                                              | Description                                                                         |
 |----------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| `CardIOModule` | [`CardIOPaymentViewController`](https://github.com/card-io/card.io-iOS-SDK#integrate-as-a-view) | [`CardIOActivity`](http://card-io.github.io/card.io-Android-SDK/io/card/payment/CardIOActivity.html) | A module to launch the card.io view controller which handles everything.            |
-| `CardIOView`   | [`CardIOView`](https://github.com/card-io/card.io-iOS-SDK#integrate-as-a-view-controller)       | N / A                                                                                                | Create a `CardIOView` to do card scanning only and manage everything else yourself. |
+| `VGSCardIOModule` | [`CardIOPaymentViewController`](https://github.com/card-io/card.io-iOS-SDK#integrate-as-a-view) | [`CardIOActivity`](http://card-io.github.io/card.io-Android-SDK/io/card/payment/CardIOActivity.html) | A module to launch the card.io view controller which handles everything.            |
 
-### `CardIOView` (iOS only)
-
-*This component is iOS-only as the card.io Android SDK does not offer this functionality.*
-
-```jsx
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import { CardIOView, CardIOUtilities } from 'react-native-awesome-card-io';
-
-export default class CardIOExample extends Component {
-
-  componentWillMount() {
-    CardIOUtilities.preload();
-  }
-
-  didScanCard = (card) => {
-    // the scanned card
-  }
-
-  render() {
-    return (
-      <View>
-        <CardIOView
-          didScanCard={this.didScanCard}
-          style={{ flex: 1 }}
-        />
-      </View>
-    );
-  }
-}
-```
-
-#### Props
-
-`didScanCard` *function* **Required** - This function will be called when the CardIOView completes its work and returns a [CreditCard](#creditcard). ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOViewDelegate.h#L24))
-
-`languageOrLocale` *string* - The preferred language for all strings appearing in the user interface. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L38))
-
-`guideColor` *string* - Alter the card guide (bracket) color. Opaque colors recommended. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L42))
-
-`useCardIOLogo` *boolean* `false` - Set to `true` to show the card.io logo over the camera instead of the PayPal logo. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L45))
-
-`hideCardIOLogo` *boolean* `false` - Hide the PayPal or card.io logo in the scan view. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L48))
-
-`allowFreelyRotatingCardGuide` *boolean* `true` - By default, in camera view the card guide and the buttons always rotate to match the device's orientation. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L55))
-
-`scanInstructions` *string* - Set the scan instruction text. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L59))
-
-`scanExpiry` *string* `true` - Set to `false` if you don't want the camera to try to scan the card expiration. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L79))
-
-`scannedImageDuration` *number* `1.0` - How long the CardIOView will display an image of the card with the computed card number superimposed after a successful scan. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L97))
-
-`detectionMode` *[CardIODetectionMode](#constants)* `CardIODetectionModeCardImageAndNumber` - Set the detection mode. ([Docs](https://github.com/card-io/card.io-iOS-SDK/blob/ec9a8632c9fd879537354d4b9075aa487dcebe8b/CardIO/CardIOView.h#L90))
-
-### `CardIOModule`
+### `VGSCardIOModule`
 
 *This module abstracts the [`CardIOPaymentViewController`](https://github.com/card-io/card.io-iOS-SDK#integrate-as-a-view) on iOS and the [`CardIOActivity`](http://card-io.github.io/card.io-Android-SDK/io/card/payment/CardIOActivity.html) on Android.*
 
 ```jsx
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Platform } from 'react-native';
-import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
+import { VGSCardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 
 export default class CardIOExample extends Component {
 
@@ -91,8 +36,9 @@ export default class CardIOExample extends Component {
   }
 
   scanCard() {
-    CardIOModule
+    VGSCardIOModule
       .scanCard()
+      .redactCard()
       .then(card => {
         // the scanned card
       })
@@ -143,6 +89,13 @@ export default class CardIOExample extends Component {
    - `unblurDigits` *number* `-1` (Android only) - Privacy feature. How many of the Card number digits NOT to blur on the resulting image. Setting it to 4 will blur all digits except the last four. ([Android](http://card-io.github.io/card.io-Android-SDK/io/card/payment/CardIOActivity.html#EXTRA_UNBLUR_DIGITS))
    - `usePaypalActionbarIcon` *boolean* `false` (Android only) - Use the PayPal icon in the ActionBar. ([Android](http://card-io.github.io/card.io-Android-SDK/io/card/payment/CardIOActivity.html#EXTRA_USE_PAYPAL_ACTIONBAR_ICON))
 
+`redactCard([config])` -> Promise - Send data to VGS and return aliases
+
+- `config` On object with the following available keys:
+   - `vautURL` *string* - The link to tht Vault
+   - `path` *string* - The path (`\path`)
+   - `method` *string* - Method of AJAX request to the Vault (`default 'POST'`)
+   - `headers` *object* - Additional headers for VGS
 ### CreditCard
 
 An object with the following keys:
