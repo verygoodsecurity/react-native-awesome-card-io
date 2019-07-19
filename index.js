@@ -1,5 +1,3 @@
-import CardIOView from './CardIOView'
-import CardIOModule from './CardIOModule'
-import CardIOUtilities from './CardIOUtilities'
+import VGSCardIOModule from './VGSCardIOModule'
 
-export { CardIOView, CardIOModule, CardIOUtilities }
+export { VGSCardIOModule }
