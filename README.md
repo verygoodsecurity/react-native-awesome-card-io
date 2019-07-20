@@ -92,8 +92,8 @@ export default class CardIOExample extends Component {
 `redactCard([config])` -> Promise - Send data to VGS and return aliases
 
 - `config` On object with the following available keys:
-   - `vautURL` *string* - The link to tht Vault
-   - `path` *string* - The path (`\path`)
+   - `vautURL` *string* *required* - The link to tht Vault
+   - `path` *string* *required* - The path (`\path`)
    - `method` *string* - Method of AJAX request to the Vault (`default 'POST'`)
    - `headers` *object* - Additional headers for VGS
 ### CreditCard
