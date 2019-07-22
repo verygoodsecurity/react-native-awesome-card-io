@@ -39,8 +39,8 @@ export default class CardIOExample extends Component {
     VGSCardIOModule
       .scanCard()
       .redactCard({
-        vaultUrl: <Link to the VGS Vault>,
-        path: <Path in your BE>,
+        vaultUrl: <Link_to_the_VGS_Vault>,
+        path: <Path_in_your_BE>,
         method: 'POST',
       })
       .then(card => {
