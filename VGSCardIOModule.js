@@ -24,6 +24,7 @@ const VGSCardIOModule = {
     cardIO: {},
     VGSConfig: {
       method: 'POST',
+      headers: {},
     },
   }, 
   
